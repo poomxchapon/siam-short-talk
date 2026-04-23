@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Siam Short — AI Drama Production</title>
 
-  <!-- APP_VERSION: v0.4.0 -->
+  <!-- APP_VERSION: v0.5.0 -->
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
@@ -164,8 +164,8 @@
     /* === Chapter marker === */
     .chapter-mark {
       position: absolute;
-      top: 40px;
-      left: 60px;
+      top: 50px;
+      left: 80px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -191,9 +191,9 @@
 
     .slide-footer {
       position: absolute;
-      bottom: 24px;
-      left: 60px;
-      right: 60px;
+      bottom: 32px;
+      left: 80px;
+      right: 80px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -208,7 +208,7 @@
 
     /* === Layouts === */
     .pad {
-      padding: 100px 60px 60px;
+      padding: 120px 80px 90px;
       height: 100%;
       box-sizing: border-box;
     }
@@ -218,7 +218,8 @@
       flex-direction: column;
       justify-content: center;
       height: 100%;
-      padding: 60px;
+      padding: 120px 80px 90px;
+      box-sizing: border-box;
     }
 
     .mega {
@@ -631,12 +632,12 @@
           <span class="dot"></span>
           <span>A Talk · 24 Apr 2026</span>
         </div>
-        <div class="pad" style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; align-items: center; height: 100%; padding: 100px 60px;">
+        <div class="pad" style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 100px; align-items: center;">
           <div>
             <div class="kicker">FORTAL ENTERTAINMENT PRESENTS</div>
-            <div class="mega-latin">SIAM<br/>SHORT.</div>
-            <div class="rule-h" style="max-width: 300px; margin-top: 36px;"></div>
-            <p class="sub" style="font-size: 1.4em; max-width: 28em; margin-top: 24px;">
+            <div class="mega-latin" style="font-size: clamp(8rem, 16vw, 16rem);">SIAM<br/>SHORT.</div>
+            <div class="rule-h" style="max-width: 320px; margin-top: 40px;"></div>
+            <p class="sub" style="font-size: 1.6em; max-width: 28em; margin-top: 28px;">
               กระบวนการผลิต<strong>ละครสั้นแนวตั้ง</strong>ด้วย AI —<br/>
               ตั้งแต่บทถึงฉาย
             </p>
@@ -647,9 +648,9 @@
               <span class="tag">HIGGSFIELD</span>
             </div>
           </div>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="assets/poster-vivah-klone.png" alt="Vivah Klone Poster" class="img-bordered" style="max-height: 600px; width: auto;" />
-            <div class="media-caption">Case Study · วิวาห์โคลน</div>
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <img src="assets/poster-vivah-klone.png" alt="Vivah Klone Poster" class="img-bordered" style="max-height: 820px; height: 82vh; width: auto;" />
+            <div class="media-caption" style="margin-top: 16px;">Case Study · วิวาห์โคลน</div>
           </div>
         </div>
         <div class="slide-footer">
@@ -687,31 +688,39 @@
       <!-- 3. WHY -->
       <section>
         <div class="chapter-mark"><span class="dot"></span><span>Chapter 01</span></div>
-        <div class="pad">
-          <div class="grid-12" style="align-items: center; height: 80vh; gap: 40px;">
-            <div class="col-span-4">
-              <div class="kicker">Why Vertical</div>
-              <div class="stat">30<span class="unit">วินาที</span></div>
-              <div class="rule-h" style="max-width: 120px; background: var(--accent); height: 3px;"></div>
-              <p class="sub">คือเวลาที่ผู้ชมดูจบบน <strong>IG · TikTok · Reels</strong><br/>Hook ต้องมาใน <em>3 วิแรก</em></p>
+        <div class="pad" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: center;">
+          <div>
+            <div class="kicker">Why Vertical</div>
+            <div style="display: flex; align-items: baseline; gap: 24px; margin-bottom: 20px;">
+              <div class="stat" style="font-size: clamp(10rem, 20vw, 18rem);">30</div>
+              <div style="font-family: var(--display-thai); font-weight: 900; font-size: 4em; color: var(--accent); line-height: 0.9;">วินาที</div>
             </div>
-            <div class="col-span-4" style="padding-left: 40px; border-left: 2px solid var(--ink);">
-              <span class="mini-head">Opportunity</span>
-              <h2 style="font-size: 1.8em; margin-bottom: 20px;">โอกาสของ AI</h2>
-              <ul class="clean-list">
-                <li>— Production cost ลด <em>100x</em></li>
-                <li>— คนเดียวทำได้ · ไม่ต้อง crew</li>
-                <li>— ทดลอง concept ใน 1 วัน</li>
-                <li>— Iterate บทไม่รู้จบ</li>
-              </ul>
-              <div class="callout">ละคร 30 วิ ที่เคยใช้ทีม 20 คน · 3 วัน<br/>วันนี้ <em>คนเดียว · 1 วัน</em></div>
-            </div>
-            <div class="col-span-4" style="display: flex; flex-direction: column; align-items: center;">
-              <div class="phone-frame">
-                <video autoplay muted loop playsinline src="assets/clip-singha.mp4"></video>
+            <div class="rule-h" style="max-width: 200px; background: var(--accent); height: 4px;"></div>
+            <p class="sub" style="font-size: 1.5em; max-width: 20em; margin-top: 24px;">
+              คือเวลาที่ผู้ชมดูจบบน <strong>IG · TikTok · Reels</strong><br/>
+              Hook ต้องมาภายใน <em>3 วินาทีแรก</em>
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px;">
+              <div>
+                <span class="mini-head">Opportunity</span>
+                <ul class="clean-list" style="font-size: 1.05em;">
+                  <li>— Production cost ลด <em>100x</em></li>
+                  <li>— คนเดียวทำได้ · ไม่ต้อง crew</li>
+                  <li>— ทดลอง concept ใน 1 วัน</li>
+                  <li>— Iterate บทไม่รู้จบ</li>
+                </ul>
               </div>
-              <div class="media-caption">9:16 · กำเนิดจาก AI</div>
+              <div class="callout" style="margin: 0; font-size: 1em;">
+                ละคร 30 วิ ที่เคยใช้ <strong>ทีม 20 คน · 3 วัน</strong><br/>
+                วันนี้ <em>คนเดียว · 1 วัน</em>
+              </div>
             </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="phone-frame" style="max-height: 760px; height: 80vh;">
+              <video autoplay muted loop playsinline src="assets/clip-singha.mp4"></video>
+            </div>
+            <div class="media-caption" style="margin-top: 18px;">9:16 · กำเนิดจาก AI · ไม่ใช่กล้อง</div>
           </div>
         </div>
         <div class="slide-footer"><span>01 · Why Vertical Drama</span><span>Siam Short</span></div>
@@ -916,11 +925,11 @@ idle状态自然呼吸轻微眨眼，
 温暖金色灯光，竖屏9:16</code></pre>
               <p style="font-size: 0.7em; color: var(--muted); margin-top: 12px;">Tip · ตั้งชื่อไทยตรงๆ <code>นี่คือ สิงหา</code> ดีกว่า "young Thai man"</p>
             </div>
-            <div class="col-span-5" style="display: flex; flex-direction: column; align-items: center;">
-              <div class="phone-frame" style="max-height: 540px;">
+            <div class="col-span-5" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div class="phone-frame" style="max-height: 740px; height: 78vh;">
                 <video autoplay muted loop playsinline src="assets/clip-singha.mp4"></video>
               </div>
-              <div class="media-caption" style="color: var(--muted);">→ ผลที่ gen ออกมา</div>
+              <div class="media-caption" style="color: var(--muted); margin-top: 16px;">→ ผลที่ gen ออกมา</div>
             </div>
           </div>
         </div>
@@ -1181,11 +1190,11 @@ Long pauses between sentences.</code></pre>
                 <li>Edit · <em>CapCut</em></li>
               </ul>
             </div>
-            <div class="col-span-7" style="display: flex; flex-direction: column; align-items: center;">
-              <div class="phone-frame" style="max-height: 640px; box-shadow: 14px 14px 0 var(--accent);">
+            <div class="col-span-7" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div class="phone-frame" style="max-height: 820px; height: 82vh; box-shadow: 16px 16px 0 var(--accent);">
                 <video controls playsinline preload="metadata" poster="assets/scene-madame-sofa.jpg" src="assets/ep1-vivah-klone.mp4"></video>
               </div>
-              <div class="media-caption" style="color: var(--muted);">กด play · ดูผลงานเต็ม 1:37</div>
+              <div class="media-caption" style="color: var(--muted); margin-top: 16px;">กด play · ดูผลงานเต็ม 1:37</div>
             </div>
           </div>
         </div>
@@ -1258,11 +1267,11 @@ Long pauses between sentences.</code></pre>
       progress: true,
       transition: "slide",
       backgroundTransition: "fade",
-      width: 1600,
-      height: 1000,
-      margin: 0.04,
+      width: 1920,
+      height: 1080,
+      margin: 0,
       minScale: 0.2,
-      maxScale: 1.4
+      maxScale: 2.0
     });
   </script>
 </body>
