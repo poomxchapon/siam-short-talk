@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Siam Short — AI Drama Production Pipeline</title>
+  <meta name="description" content="วิธี Gen ละครสั้น Siam Short ด้วย AI — Nano Banana Pro + Seedance + ElevenLabs" />
+
+  <!-- APP_VERSION: v0.1.0 -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-soft: #f5d67a;
+      --accent: #e50914;
+      --bg: #0a0a0a;
+      --text: #f2f2f2;
+      --muted: #8a8a8a;
+      --border: #2a2a2a;
+    }
+
+    .reveal {
+      font-family: "IBM Plex Sans Thai", "Segoe UI", sans-serif;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal section {
+      padding: 40px;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3,
+    .reveal h4 {
+      font-family: "IBM Plex Sans Thai", sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: none;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .reveal h1 {
+      font-size: 3.2em;
+      color: var(--gold);
+      margin-bottom: 0.3em;
+    }
+
+    .reveal h2 {
+      font-size: 2.2em;
+      color: var(--gold);
+      margin-bottom: 0.4em;
+    }
+
+    .reveal h3 {
+      font-size: 1.5em;
+      color: var(--gold-soft);
+      margin-bottom: 0.5em;
+    }
+
+    .reveal p,
+    .reveal li {
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+
+    .reveal strong {
+      color: var(--gold-soft);
+      font-weight: 600;
+    }
+
+    .reveal em {
+      color: var(--accent);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .reveal code {
+      font-family: "JetBrains Mono", monospace;
+      background: #1a1a1a;
+      color: var(--gold-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .reveal pre {
+      width: 100%;
+      font-size: 0.55em;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+    }
+
+    .reveal pre code {
+      padding: 20px;
+      font-family: "JetBrains Mono", monospace;
+      line-height: 1.4;
+      max-height: 500px;
+    }
+
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.75em;
+      margin: 0.5em 0;
+    }
+
+    .reveal table th {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--gold);
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .reveal table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .reveal table tr:hover td {
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    .title-slide {
+      text-align: center !important;
+    }
+
+    .title-slide h1 {
+      font-size: 4em;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.1em;
+    }
+
+    .title-slide .subtitle {
+      font-size: 1.4em;
+      color: var(--muted);
+      margin-top: 0.3em;
+      font-weight: 400;
+    }
+
+    .title-slide .meta {
+      margin-top: 2em;
+      color: var(--muted);
+      font-size: 0.8em;
+      letter-spacing: 0.1em;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 14px;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 20px;
+      font-size: 0.7em;
+      margin: 4px 6px 4px 0;
+      letter-spacing: 0.02em;
+    }
+
+    .pill-red {
+      background: rgba(229, 9, 20, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .callout {
+      border-left: 4px solid var(--gold);
+      padding: 16px 24px;
+      background: rgba(212, 175, 55, 0.08);
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--accent);
+      background: rgba(229, 9, 20, 0.08);
+    }
+
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75em;
+      background: #151515;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pipeline-num {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      background: var(--gold);
+      color: #000;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .pipeline-arrow {
+      color: var(--gold);
+      margin-left: 14px;
+      font-size: 1.2em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: #151515;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .card h3 {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+    }
+
+    .card p,
+    .card li {
+      font-size: 0.8em;
+      color: #c8c8c8;
+    }
+
+    .kbd {
+      font-family: "JetBrains Mono", monospace;
+      background: #2a2a2a;
+      color: var(--gold-soft);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      border: 1px solid var(--border);
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      color: var(--muted);
+      font-size: 0.5em;
+      letter-spacing: 0.1em;
+    }
+
+    .reveal .slide-number {
+      color: var(--gold);
+      background: transparent;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .reveal .progress {
+      color: var(--gold);
+    }
+
+    .big-quote {
+      font-size: 1.6em;
+      font-weight: 500;
+      line-height: 1.4;
+      text-align: center;
+      color: var(--gold-soft);
+      padding: 40px;
+    }
+
+    .big-quote::before {
+      content: "“";
+      font-size: 2em;
+      color: var(--gold);
+      display: block;
+      line-height: 0.5;
+    }
+
+    .big-quote::after {
+      content: "”";
+      font-size: 2em;
+      color: var(--gold);
+      display: block;
+      text-align: right;
+      line-height: 0.5;
+    }
+
+    .label {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.6em;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    .label.gold {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .highlight-box {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold);
+      padding: 20px 28px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .small {
+      font-size: 0.75em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. Title -->
+      <section class="title-slide">
+        <h1>SIAM SHORT</h1>
+        <div class="subtitle">AI Drama Production Pipeline<br/><span style="color: var(--gold-soft);">สร้างละครสั้นแนวตั้งด้วย AI — ตั้งแต่บทถึงฉาย</span></div>
+        <div class="meta">
+          <span class="pill">Nano Banana Pro</span>
+          <span class="pill">Seedance 2.0</span>
+          <span class="pill">ElevenLabs</span>
+          <span class="pill">Higgsfield</span>
+        </div>
+        <div class="meta" style="margin-top: 3em;">24 เมษายน 2026 · ภูมิ · FORTAL ENTERTAINMENT</div>
+      </section>
+
+      <!-- 2. Agenda -->
+      <section>
+        <h2>วันนี้เราจะคุยอะไรกัน</h2>
+        <div class="grid-2" style="margin-top: 1em;">
+          <div>
+            <ol style="font-size: 0.9em;">
+              <li>ภาพรวม Pipeline ละครสั้น</li>
+              <li>Tools Stack ที่ใช้</li>
+              <li>วิเคราะห์บท → แบ่ง Shot</li>
+              <li>Character &amp; Scene Reference</li>
+              <li>Video Gen — Seedance 2.0</li>
+            </ol>
+          </div>
+          <div>
+            <ol start="6" style="font-size: 0.9em;">
+              <li>Voice Design — ElevenLabs</li>
+              <li>Lens = ภาษาอารมณ์</li>
+              <li>หลบ Content Filter</li>
+              <li>Common Mistakes</li>
+              <li>Demo + Q&amp;A</li>
+            </ol>
+          </div>
+        </div>
+        <div class="callout" style="margin-top: 1em;">
+          <strong>เป้าหมาย:</strong> กลับออกไปแล้วทำละครสั้น 30 วิได้ภายในวันเดียว
+        </div>
+      </section>
+
+      <!-- 3. Why Vertical Drama -->
+      <section>
+        <h2>ทำไมต้องละครสั้นแนวตั้ง?</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>📱 พฤติกรรมผู้ชม</h3>
+            <ul>
+              <li>IG Story / TikTok / Reels — <strong>9:16</strong></li>
+              <li>ดูจบใน 30-60 วินาที</li>
+              <li>ต้อง hook ภายใน 3 วิแรก</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🎬 โอกาสของ AI</h3>
+            <ul>
+              <li>Production cost ต่ำกว่า 100 เท่า</li>
+              <li>คนเดียวทำได้ ไม่ต้อง crew</li>
+              <li>ทดลอง concept ได้ไว</li>
+            </ul>
+          </div>
+        </div>
+        <div class="big-quote" style="margin-top: 1em; font-size: 1.1em;">
+          "ละคร 30 วินาที ที่เมื่อก่อนใช้ทีม 20 คน · 3 วัน<br/>วันนี้ 1 คนทำได้ใน 1 วัน"
+        </div>
+      </section>
+
+      <!-- 4. Pipeline Overview -->
+      <section>
+        <h2>Pipeline — 6 Steps</h2>
+        <div class="pipeline">
+          <div class="pipeline-step"><span class="pipeline-num">1</span> <strong>วิเคราะห์บท</strong> — แบ่ง Story 30วิ + Shot list + Lens spec</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step"><span class="pipeline-num">2</span> <strong>Character Ref</strong> — Nano Banana Pro (front + side view)</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step"><span class="pipeline-num">3</span> <strong>Scene Ref</strong> — Nano Banana Pro (ภาพฉาก ไม่มีคน)</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step"><span class="pipeline-num">4</span> <strong>Video Gen</strong> — Seedance 2.0 / Higgsfield</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step"><span class="pipeline-num">5</span> <strong>Voice</strong> — ElevenLabs Voice Design → TTS</div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-step"><span class="pipeline-num">6</span> <strong>Lipsync + Edit</strong> — Export 1080×1920 (9:16)</div>
+        </div>
+      </section>
+
+      <!-- 5. Tools Stack -->
+      <section>
+        <h2>Tools Stack</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>หน้าที่</th>
+              <th>ทำไมเลือก</th>
+              <th>ราคา</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Nano Banana Pro</strong></td>
+              <td>Gen ภาพตัวละคร + ฉาก</td>
+              <td>Consistent face + ใช้ ref image ได้</td>
+              <td>มี credit ฟรี</td>
+            </tr>
+            <tr>
+              <td><strong>Seedance 2.0</strong> (Jimeng)</td>
+              <td>Gen video หลัก</td>
+              <td>ถูก + จีนเข้าใจ cinematic ดี</td>
+              <td>มี credit ฟรี</td>
+            </tr>
+            <tr>
+              <td><strong>Higgsfield Cinema</strong></td>
+              <td>Backup video / inpaint ref</td>
+              <td>EN prompt + camera movement เนียน</td>
+              <td>มี credit ฟรี</td>
+            </tr>
+            <tr>
+              <td><strong>ElevenLabs</strong></td>
+              <td>Voice design + TTS</td>
+              <td>พากย์ไทยธรรมชาติที่สุด</td>
+              <td>Free tier มี</td>
+            </tr>
+            <tr>
+              <td><strong>Lipsync</strong></td>
+              <td>ซิงค์ปากกับเสียง</td>
+              <td>Seedance ปากพูดไม่แม่น</td>
+              <td>แล้วแต่ tool</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 6. Step 1 - Script Analysis -->
+      <section>
+        <h2>Step 1 · วิเคราะห์บท</h2>
+        <div class="grid-2">
+          <div>
+            <h3>ต้องแยกให้ได้ 5 อย่าง</h3>
+            <ol>
+              <li><strong>ตัวละคร</strong> — ชื่อ อายุ ลุค บทบาท</li>
+              <li><strong>ฉาก</strong> — สถานที่ เวลา อากาศ</li>
+              <li><strong>Story</strong> — แต่ละ Story ≤ 30 วิ</li>
+              <li><strong>Shot</strong> — ตามจังหวะอารมณ์</li>
+              <li><strong>Lens</strong> — เลือกตามอารมณ์ shot</li>
+            </ol>
+          </div>
+          <div>
+            <h3>ตัวอย่าง — แบ่ง Shot</h3>
+            <div class="small" style="font-style: italic; margin-bottom: 8px;">"สิงหา... แกแน่ใจแล้วเหรอ? 3 ปีที่ผ่านมา แกพิสูจน์อะไรได้บ้าง?"</div>
+            <table style="font-size: 0.65em;">
+              <tr><td>A (3วิ)</td><td>CU พ่อ 33mm → "สิงหา..."</td></tr>
+              <tr><td>B (2วิ)</td><td>CU ลูก 85mm → reaction นิ่ง</td></tr>
+              <tr><td>C (3วิ)</td><td>Wide 16mm → เห็น scale ห้อง</td></tr>
+              <tr><td>D (2วิ)</td><td>Insert มือ 100mm → นิ้วเคาะ</td></tr>
+              <tr><td>E (2วิ)</td><td>Low angle 24mm → ลูกไม่กลัว</td></tr>
+              <tr><td>F (3วิ)</td><td>OTS 50mm → "แกพิสูจน์อะไร?"</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Step 2 - Character Ref -->
+      <section>
+        <h2>Step 2 · Character Reference</h2>
+        <p>สร้าง ref ตัวละคร <strong>front + side view</strong> สำหรับใช้ตลอด production</p>
+        <pre><code class="language-markdown">character reference sheet, front view and side view, Thai man, age 28,
+handsome sharp jawline, short neat black hair, athletic build,
+wearing worn-out plain black t-shirt,
+neutral expression,
+white background, ID photo style, clean lighting,
+full face visible, photorealistic, Thai Asian face, consistent features</code></pre>
+        <div class="callout warn">
+          <strong>⚠️ ระวัง:</strong> Character ref sheet นี้ <em>ห้ามใช้ตรงๆ กับ Seedance</em> — มันจะ reject!<br/>
+          ใช้แค่กับ Nano Banana Pro เพื่อ gen ภาพฉากก่อน
+        </div>
+      </section>
+
+      <!-- 8. Step 3 - Scene Ref -->
+      <section>
+        <h2>Step 3 · Scene Reference</h2>
+        <p>ภาพฉาก <strong>ไม่มีคน</strong> เพื่อใช้เป็น ref ให้ Seedance</p>
+        <pre><code class="language-markdown">Cinematic wide shot, 16mm lens,
+grand white neoclassical European mansion at dusk,
+tall white columns, arched windows, white marble facade,
+warm golden lights glowing from windows,
+circular driveway with elegant fountain,
+dark dramatic clouds in sky,
+no people,
+photorealistic, vertical 9:16</code></pre>
+        <div class="grid-2">
+          <div class="card">
+            <h3>✅ ต้องมี</h3>
+            <ul class="small">
+              <li>เลนส์ชัดเจน (16mm / 33mm / 50mm)</li>
+              <li>ช่วงเวลา sync กับฉากอื่น</li>
+              <li><code>no people</code> ทุกครั้ง</li>
+              <li><code>vertical 9:16</code></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>💡 Trick</h3>
+            <p class="small">Interior หลายมุม → ใช้ <code>multiple angles, 4 panels layout</code> จะได้ 4 มุมในรูปเดียว เป็น ref ได้หลาย scene</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. Step 4 - Video Gen Seedance -->
+      <section>
+        <h2>Step 4 · Video Gen — Seedance 2.0</h2>
+        <div class="highlight-box">
+          <strong>กฎเหล็ก:</strong> Seedance ใช้ <em>ภาษาจีน</em> เสมอ — ได้ผลดีกว่า EN หลายเท่า
+        </div>
+        <pre><code class="language-markdown">@[ref สิงหา] นี่คือ สิงหา ,
+@[ref ฉาก] นี่คือ ref ของฉากนี้
+cinematic live-action video，Netflix 原创剧集质量，
+85mm镜头特写，สิงหา穿褪色黑色T恤，
+自信温暖的微笑，眼神坚定充满爱意，
+idle状态自然呼吸轻微眨眼，
+豪宅客厅水晶吊灯金色光斑虚化背景，
+温暖金色灯光，极浅景深，竖屏9:16</code></pre>
+        <p class="small"><strong>Tip:</strong> ตั้งชื่อตัวละครไทยตรงๆ <code>นี่คือ สิงหา</code> ดีกว่าเขียน "young Thai man age 28"</p>
+      </section>
+
+      <!-- 10. Idle vs Talking -->
+      <section>
+        <h2>Idle vs Talking</h2>
+        <div class="callout warn">
+          <strong>Rule of thumb:</strong> ทุก shot ที่มีบทพูด → gen เป็น <em>idle</em> ก่อน แล้วค่อยทำ <em>lipsync แยก</em><br/>
+          เพราะ Seedance ขยับปากพูดไม่แม่น
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>😐 Idle (ไม่ขยับปาก)</h3>
+            <pre style="font-size: 0.7em; background: #0a0a0a;"><code>idle状态，
+自然呼吸，
+轻微眨眼，
+极轻微晃动，
+保持静止</code></pre>
+          </div>
+          <div class="card">
+            <h3>🗣️ Talking (ขยับปาก)</h3>
+            <pre style="font-size: 0.7em; background: #0a0a0a;"><code>嘴唇自然开合说话，
+头部轻微点头强调重点
+正在说话：
+"[บทพูดภาษาไทย]"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. Lens Guide -->
+      <section>
+        <h2>เลนส์ = ภาษาอารมณ์</h2>
+        <p class="small">เลือกเลนส์ตาม <em>อารมณ์ที่ต้องการสื่อ</em> ไม่ใช่แค่ระยะใกล้/ไกล</p>
+        <table>
+          <thead><tr><th>Lens</th><th>ฟีล</th><th>ใช้ตอน</th></tr></thead>
+          <tbody>
+            <tr><td><strong>16mm</strong></td><td>กว้าง เห็น scale อำนาจ</td><td>Establishing, ห้องใหญ่ คนตัวเล็ก</td></tr>
+            <tr><td><strong>33mm</strong></td><td>CU + เห็น context</td><td>เปิดฉาก, บทสนทนาที่ต้องเห็นห้อง</td></tr>
+            <tr><td><strong>50mm</strong></td><td>ตาคนจริง ธรรมชาติ</td><td>OTS, POV, tracking</td></tr>
+            <tr><td><strong>85mm</strong> <span class="label gold">⭐ ใช้บ่อย</span></td><td>Bokeh หนัก isolate อารมณ์</td><td>Reaction, emotional CU</td></tr>
+            <tr><td><strong>100mm macro</strong></td><td>Detail จัดสุด</td><td>Insert — มือ, วัตถุ, detail</td></tr>
+            <tr><td><strong>135mm</strong></td><td>เบลอหมด เหลือจุดเดียว</td><td>ECU ตา, น้ำตา, tension สูงสุด</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 12. Lens Emotion Example -->
+      <section>
+        <h2>ตัวอย่าง — เลือก Lens ตามอารมณ์</h2>
+        <h3>ฉากพ่อท้าลูก (กดดัน)</h3>
+        <pre style="font-size: 0.65em;"><code>CU พ่อ 33mm (เห็น context ห้อง)
+→ CU ลูก 85mm (isolate อารมณ์)
+→ Wide 16mm (เห็น scale ห้องใหญ่ ลูกตัวเล็ก)
+→ Insert มือ 100mm (นิ้วเคาะเก้าอี้)
+→ Low angle ลูก 24mm (ลูกไม่กลัว)
+→ OTS 50mm (มุมตาลูกมองพ่อ)</code></pre>
+        <h3>ฉากดราม่าฝนตก (เจ็บปวด)</h3>
+        <pre style="font-size: 0.65em;"><code>Full body 35mm (เห็นทั้งคน+ฝน+บ้าน)
+→ CU หน้า 85mm (น้ำตา+ฝน)
+→ Insert เค้กในโคลน 100mm (detail ความเจ็บ)
+→ ECU ตา 135mm (เบลอหมด เหลือแค่ตา)</code></pre>
+      </section>
+
+      <!-- 13. Content Filter Hack -->
+      <section>
+        <h2>หลบ Content Filter <span class="label">⚠️ สำคัญ</span></h2>
+        <p>Seedance มี moderation เข้ม — ต้องรู้วิธีหลบ</p>
+        <div class="grid-2">
+          <div>
+            <h3>🖼️ Image Filter</h3>
+            <p class="small">Character ref มีอาวุธ/เกราะ/ท่าก้าวร้าว → reject</p>
+            <ul class="small">
+              <li>Error: <code>你上传的图片不符合平台规则</code></li>
+              <li><strong>Fix:</strong> Crop เฉพาะหน้า หรือใช้ภาพฉากแทน</li>
+              <li>Transition clip → แนบแค่ scene ref</li>
+            </ul>
+          </div>
+          <div>
+            <h3>📝 Text Filter</h3>
+            <p class="small">คำต้องห้าม → คำแทน</p>
+            <table style="font-size: 0.65em;">
+              <tr><th>❌</th><th>✅</th></tr>
+              <tr><td>凶狠 (ดุร้าย)</td><td>严肃 / 坚定</td></tr>
+              <tr><td>威胁 (ข่มขู่)</td><td>不满</td></tr>
+              <tr><td>血/死/杀</td><td>痕迹 / 裂纹</td></tr>
+              <tr><td>爆炸</td><td>能量波纹</td></tr>
+              <tr><td>ตาย/ฆ่า</td><td>เก็บไว้ TTS</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 14. Step 5 - Voice -->
+      <section>
+        <h2>Step 5 · Voice Design — ElevenLabs</h2>
+        <p>Voice Design prompt = ออกแบบเสียงด้วยภาษาเขียน</p>
+        <h3>ตัวอย่าง — พ่อผู้มีอำนาจ</h3>
+        <pre><code>An elderly Thai man in his mid-60s.
+Deep, authoritative baritone voice with a commanding presence.
+Speaks slowly and deliberately, each word carrying weight and power.
+Gravelly texture from age but still strong.
+Calm but intimidating. Slight rasp.
+Long pauses between sentences.</code></pre>
+        <div class="callout">
+          <strong>Structure:</strong> <code>เพศ + อายุ</code> → <code>ลักษณะเสียง</code> → <code>วิธีพูด</code> → <code>อารมณ์</code> → <code>ลักษณะพิเศษ</code>
+        </div>
+      </section>
+
+      <!-- 15. Common Mistakes -->
+      <section>
+        <h2>Common Mistakes</h2>
+        <table>
+          <thead><tr><th>❌ ผิด</th><th>✅ ถูก</th></tr></thead>
+          <tbody>
+            <tr><td>ใช้ face ref sheet ตรงๆ ใน Seedance</td><td>Gen ภาพฉากก่อน → ใช้ภาพฉากเป็น ref</td></tr>
+            <tr><td>Gen ปากขยับพูด</td><td>Gen idle → lipsync แยก</td></tr>
+            <tr><td>Intercut 5 มุมใน 5 วินาที</td><td>1 clip = 1 มุม 1 action → ตัดต่อรวม</td></tr>
+            <tr><td>เขียน prompt EN ใน Seedance</td><td>ใช้จีน — ผลดีกว่าหลายเท่า</td></tr>
+            <tr><td>ใช้เลนส์เดิมทุก shot</td><td>สลับเลนส์ตามอารมณ์</td></tr>
+            <tr><td>ช่วงเวลาไม่ sync (กลางคืน→เช้า)</td><td>เช็ค continuity ทุก cut</td></tr>
+            <tr><td>ไม่ใส่ <code>no background music</code></td><td>ใส่ไว้ ไม่งั้นมันเติมเพลงเอง</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 16. Text vs Image Priority -->
+      <section>
+        <h2>กฎทองที่ต้องจำ</h2>
+        <div class="big-quote">
+          ถ้า Seedance ต้องเลือกระหว่าง<br/>
+          <em>text prompt</em> กับ <em>ref image</em><br/>
+          มันจะเชื่อ <span style="color: var(--gold);">text</span> มากกว่า
+        </div>
+        <div class="callout warn">
+          <strong>แปลว่า:</strong> ถ้าภาพ ref โทนแดง แต่ prompt เขียน <code>cool blue</code> → ได้สีขัดกัน<br/>
+          <strong>How to apply:</strong> ตรวจ prompt ให้ <em>sync</em> กับ ref image ทุกครั้ง
+        </div>
+      </section>
+
+      <!-- 17. Workflow Real -->
+      <section>
+        <h2>Workflow จริง · End-to-End</h2>
+        <div class="pipeline" style="font-size: 0.7em;">
+          <div class="pipeline-step"><span class="pipeline-num">1</span> อ่านบท → แบ่ง shot + lens + timeline</div>
+          <div class="pipeline-step"><span class="pipeline-num">2</span> Gen character ref (Nano Banana) → download</div>
+          <div class="pipeline-step"><span class="pipeline-num">3</span> Gen scene ref (Nano Banana) → download</div>
+          <div class="pipeline-step"><span class="pipeline-num">4</span> Seedance — แนบ ref → gen idle 5 วิ/clip → download</div>
+          <div class="pipeline-step"><span class="pipeline-num">5</span> ถ้าติด filter → ปรับ prompt → retry</div>
+          <div class="pipeline-step"><span class="pipeline-num">6</span> ElevenLabs → voice design → TTS บทพูด</div>
+          <div class="pipeline-step"><span class="pipeline-num">7</span> Lipsync tool → video + audio</div>
+          <div class="pipeline-step"><span class="pipeline-num">8</span> Premiere/CapCut → ตัดต่อ + SFX + เพลง + ซับไทย</div>
+          <div class="pipeline-step"><span class="pipeline-num">9</span> Export 1080×1920 (9:16) → IG Story / TikTok / Reels</div>
+        </div>
+      </section>
+
+      <!-- 18. Demo -->
+      <section>
+        <h2>Demo — Live 🎬</h2>
+        <div class="grid-2">
+          <div>
+            <h3>เราจะโชว์อะไร</h3>
+            <ol>
+              <li>เปิดบทดราม่า 1 scene</li>
+              <li>แบ่ง shot + เลือก lens</li>
+              <li>Gen character ref <em>(Nano Banana Pro)</em></li>
+              <li>Gen scene ref</li>
+              <li>ส่ง Seedance gen video</li>
+              <li>ระหว่างรอ → filter hack tips</li>
+              <li>โชว์ผลงานจริง <em>วิวาห์โคลน</em></li>
+            </ol>
+          </div>
+          <div>
+            <h3>สิ่งที่จะเห็น</h3>
+            <ul>
+              <li>บท → prompt ใช้จริง</li>
+              <li>Filter reject → fix → pass</li>
+              <li>Before/After lipsync</li>
+              <li>เปรียบเทียบ 16mm vs 85mm</li>
+              <li>Production Doc (.docx) ที่ส่งทีมได้</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 19. Resources -->
+      <section>
+        <h2>Resources</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>📚 Full Guide</h3>
+            <p class="small">คู่มือเต็ม <code>drama-prompt-guide-standalone.md</code> — 840+ บรรทัด ครอบคลุม prompt ทุก step</p>
+          </div>
+          <div class="card">
+            <h3>🎬 Reference Work</h3>
+            <p class="small">วิวาห์โคลน — Vertical Drama บน IG Story ของ FORTAL ENTERTAINMENT</p>
+          </div>
+          <div class="card">
+            <h3>🛠️ Skill Files</h3>
+            <ul class="small">
+              <li>Nano Banana Pro prompts</li>
+              <li>Seedance Chinese prompts</li>
+              <li>ElevenLabs voice designs</li>
+              <li>Timeline prompt structure</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🔑 Key Commands</h3>
+            <ul class="small">
+              <li><code>drama [script.pdf]</code> — full pipeline</li>
+              <li><code>drama scene [desc]</code> — ฉากเดียว</li>
+              <li><code>drama character [name]</code> — ตัวละคร</li>
+              <li><code>drama fix [prompt]</code> — แก้ filter</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 20. Thank You -->
+      <section class="title-slide">
+        <h1>ขอบคุณครับ</h1>
+        <div class="subtitle">Q&amp;A Time</div>
+        <div class="meta" style="margin-top: 3em;">
+          <div class="big-quote" style="font-size: 1em; padding: 20px;">
+            "ละคร 30 วิ · 1 คน · 1 วัน — ไม่ใช่อนาคต แต่คือวันนี้"
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pill">@poomxchapon</span>
+          <span class="pill">FORTAL ENTERTAINMENT</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: "c/t",
+      controls: true,
+      progress: true,
+      transition: "slide",
+      backgroundTransition: "fade",
+      width: 1280,
+      height: 800,
+      margin: 0.06,
+      plugins: [RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+</html>
