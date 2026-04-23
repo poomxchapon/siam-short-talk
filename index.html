@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Siam Short — AI Drama Production</title>
 
-  <!-- APP_VERSION: v0.5.0 -->
+  <!-- APP_VERSION: v0.6.0 -->
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:wght@200;300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:wght@200;300;400;500;700;900&family=Charmonman:wght@400;700&family=Sriracha&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -29,6 +29,40 @@
       --display-thai: "Kanit", sans-serif;
       --mono: "JetBrains Mono", ui-monospace, monospace;
       --body: "Kanit", sans-serif;
+      --script: "Sriracha", cursive;
+      --signature: "Charmonman", cursive;
+    }
+
+    .script {
+      font-family: var(--script);
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    .signature {
+      font-family: var(--signature);
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .hand-note {
+      display: inline-block;
+      font-family: var(--script);
+      font-weight: 400;
+      font-size: 0.85em;
+      color: var(--accent);
+      transform: rotate(-2deg);
+      line-height: 1.2;
+      margin-top: 8px;
+    }
+
+    .hand-note::before {
+      content: "→ ";
+      font-family: var(--script);
     }
 
     html, body { background: var(--bg); }
@@ -639,7 +673,7 @@
             <div class="rule-h" style="max-width: 320px; margin-top: 40px;"></div>
             <p class="sub" style="font-size: 1.6em; max-width: 28em; margin-top: 28px;">
               กระบวนการผลิต<strong>ละครสั้นแนวตั้ง</strong>ด้วย AI —<br/>
-              ตั้งแต่บทถึงฉาย
+              ตั้งแต่<span class="script" style="font-size: 1.15em;">บท</span> ถึง <span class="script" style="font-size: 1.15em;">ฉาย</span>
             </p>
             <div class="tag-list">
               <span class="tag filled">NANO BANANA PRO</span>
@@ -712,7 +746,7 @@
               </div>
               <div class="callout" style="margin: 0; font-size: 1em;">
                 ละคร 30 วิ ที่เคยใช้ <strong>ทีม 20 คน · 3 วัน</strong><br/>
-                วันนี้ <em>คนเดียว · 1 วัน</em>
+                วันนี้ <span class="script" style="font-size: 1.3em;">คนเดียว · 1 วัน</span>
               </div>
             </div>
           </div>
@@ -840,6 +874,7 @@ neutral expression, white background,
 ID photo style, clean lighting, full face visible,
 photorealistic, Thai Asian face, consistent features</code></pre>
               <div class="callout"><strong>⚠ WARNING</strong> · ref sheet นี้ <em>ห้ามใช้ Seedance ตรงๆ</em><br/>มัน reject · ใช้แค่ Nano Banana ก่อน gen ภาพฉาก</div>
+              <div class="hand-note">พลาดตรงนี้กันเยอะมาก</div>
             </div>
             <div class="col-span-5">
               <span class="mini-head">Actual Refs · วิวาห์โคลน</span>
@@ -912,7 +947,7 @@ no people, photorealistic, vertical 9:16</code></pre>
           <div class="grid-12" style="margin-top: 24px; gap: 40px; align-items: start;">
             <div class="col-span-7">
               <div class="big-quote" style="font-size: 1.6em; color: var(--paper);">
-                Seedance ใช้ <em>ภาษาจีน</em> เสมอ<br/>ได้ผลดีกว่า EN <em>หลายเท่า</em>
+                Seedance ใช้ <em>ภาษาจีน</em> เสมอ<br/>ได้ผลดีกว่า EN <span class="script" style="font-size: 1.2em; color: var(--accent);">หลายเท่า!</span>
               </div>
 <pre style="margin-top: 24px;"><code>@[ref สิงหา] นี่คือ สิงหา ,
 @[ref ฉาก] นี่คือ ref ของฉากนี้
@@ -1106,7 +1141,7 @@ Long pauses between sentences.</code></pre>
           <div class="big-quote" style="font-size: 3em; max-width: 20em;">
             ถ้า Seedance ต้องเลือกระหว่าง<br/>
             <em>text prompt</em> หรือ <em>ref image</em><br/>
-            — มันเชื่อ <em>text</em> มากกว่า
+            — มันเชื่อ <span class="signature" style="font-size: 1.3em; color: var(--accent);">text</span> มากกว่า
           </div>
           <div class="rule-h" style="max-width: 200px; background: var(--accent); height: 3px; margin-top: 40px;"></div>
           <p class="sub" style="margin-top: 20px; max-width: 32em; color: var(--paper);">
@@ -1148,7 +1183,7 @@ Long pauses between sentences.</code></pre>
         <div class="pad">
           <div class="kicker">Power Move</div>
           <h2 style="font-size: 2.4em;">Scene เดียว · ตัวละครหลายคน</h2>
-          <p class="sub" style="max-width: 44em;">ถ้า scene ref ดี → reuse ได้หมด · แค่เปลี่ยน character prompt <em>ก็ได้ clip ใหม่</em></p>
+          <p class="sub" style="max-width: 44em;">ถ้า scene ref ดี → reuse ได้หมด · แค่เปลี่ยน character prompt <span class="script" style="font-size: 1.15em; color: var(--accent);">ก็ได้ clip ใหม่</span></p>
           <div class="clip-grid">
             <div class="clip-item">
               <video autoplay muted loop playsinline src="assets/clip-singha.mp4"></video>
@@ -1180,7 +1215,7 @@ Long pauses between sentences.</code></pre>
           <h2 style="font-size: 2.6em; color: var(--paper);">วิวาห์โคลน · EP1 Story2</h2>
           <div class="grid-12" style="margin-top: 24px; gap: 40px; align-items: center;">
             <div class="col-span-5">
-              <p class="sub" style="color: var(--paper); max-width: 26em;">ผลลัพธ์สุดท้าย · <strong style="color: var(--paper);">1 นาที 37 วินาที</strong> · ใช้เวลาผลิตจริง <em>1 วัน</em> คนเดียว</p>
+              <p class="sub" style="color: var(--paper); max-width: 26em;">ผลลัพธ์สุดท้าย · <strong style="color: var(--paper);">1 นาที 37 วินาที</strong> · ใช้เวลาผลิตจริง <span class="script" style="font-size: 1.3em; color: var(--accent);">1 วัน</span> คนเดียว</p>
               <div class="rule-h" style="max-width: 160px; background: var(--accent); height: 3px; margin: 24px 0;"></div>
               <ul style="color: var(--paper);">
                 <li>Character ref · <em>4 ตัว</em></li>
@@ -1206,7 +1241,7 @@ Long pauses between sentences.</code></pre>
         <div class="chapter-mark"><span class="dot"></span><span>Fin · Q&amp;A</span></div>
         <div class="hero">
           <div class="kicker">Thank You</div>
-          <div class="mega-latin" style="color: var(--paper);">ขอบคุณ<br/>ครับ.</div>
+          <div class="signature" style="font-size: clamp(8rem, 16vw, 14rem); color: var(--paper); line-height: 0.9;">ขอบคุณ<br/>ครับ</div>
           <div class="rule-h" style="max-width: 300px; background: var(--accent); height: 3px; margin-top: 40px;"></div>
           <p class="sub" style="color: var(--paper); margin-top: 24px; max-width: 32em;">
             Q&amp;A · ถามได้ทุกเรื่องที่คาใจ<br/>
